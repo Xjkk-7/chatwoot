@@ -98,4 +98,4 @@ document.addEventListener('DOMContentLoaded', () => {
     subtree: true,
     characterData: true,
   });
-}); 
+});
