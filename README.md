@@ -28,13 +28,35 @@ The simplest way to see the customizations is to open the static demo:
 
 ## Running with Docker
 
-Due to Ruby version mismatches and dependencies, running the full Chatwoot application with customizations has some challenges. The demo provides a comprehensive view of all features without requiring a complex setup.
-
-If you want to attempt running the full application:
+You can run the full Support Hub application with Docker using our compatible configuration:
 
 1. Ensure Docker is installed on your system
-2. Run `docker-compose -f docker-compose.demo.yml up -d`
-3. Access the application at http://localhost:3000
+2. Run the start script:
+   - On Windows: `start-support-hub.bat`
+   - On Linux/Mac: `bash setup-db.sh` and then `docker-compose -f docker-compose.runnable.yml up -d`
+3. Access Support Hub at http://localhost:3000
+4. Login with these credentials:
+   - Email: admin@example.com
+   - Password: Password1!
+
+For compatibility reasons, we use Chatwoot v2.18.0 which is guaranteed to work with our customizations.
+
+## Quick Installation on Existing Chatwoot
+
+If you already have a running Chatwoot instance and just want to add Support Hub customizations:
+
+1. Copy the following files to your Chatwoot's public directory:
+   - `public/support-hub-inject.js`
+   - `public/support-hub-style.css`
+   - `public/support-hub-loader.js`
+   - `public/support-hub-app-injector.js`
+
+2. Add this line to your Chatwoot's app/views/layouts/vueapp.html.erb file:
+   ```html
+   <script src="/support-hub-app-injector.js"></script>
+   ```
+
+3. Alternatively, use the bookmarklet provided in `public/support-hub-customizer.html`
 
 ## Implementation Details
 
