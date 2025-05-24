@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  chatwoot:
+    image: chatwoot/chatwoot:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - RAILS_ENV=production
+      - NODE_ENV=production
+      - RAILS_LOG_TO_STDOUT=true
+      - SECRET_KEY_BASE=2bbe5972508883b70e91578a79da7b3f88f9940af61565d4149cd1835e0f58f22e65d275f1bc3892f2dd10ddbc9b441410994333d7b4f7c657da957bf01057d1
+      - FRONTEND_URL=http://localhost:3000
+      - FORCE_SSL=false
+      - ENABLE_ACCOUNT_SIGNUP=true
+      - INSTALLATION_NAME=Support Hub
+      - INSTALLATION_ENV=docker
+    volumes:
+      - ./public:/app/public 

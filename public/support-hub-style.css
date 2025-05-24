@@ -1,0 +1,186 @@
+/**
+ * Support Hub Styles
+ * Custom styles for the Support Hub rebranding
+ */
+
+/* Logo styling */
+.support-hub-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: #1f93ff;
+  border-radius: 4px;
+}
+
+.support-hub-logo-inner {
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+/* Conversation Insights Panel styling */
+.conversation-insights-panel {
+  width: 320px;
+  background-color: white;
+  border-left: 1px solid #e6eaef;
+  overflow-y: auto;
+  height: 100%;
+  padding: 16px;
+}
+
+.insights-section {
+  margin-bottom: 24px;
+}
+
+.insights-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #536171;
+  margin-bottom: 12px;
+}
+
+.insight-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.insight-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-right: 8px;
+}
+
+.sentiment-positive {
+  background-color: #e3f9e5;
+  color: #138a36;
+}
+
+.sentiment-negative {
+  background-color: #ffecec;
+  color: #d9304f;
+}
+
+.sentiment-neutral {
+  background-color: #f0f2f5;
+  color: #536171;
+}
+
+.topic-badge {
+  background-color: #e6f0ff;
+  color: #1f76cc;
+}
+
+.metrics-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.metrics-label {
+  color: #536171;
+}
+
+.metrics-value {
+  font-weight: 600;
+}
+
+.suggested-response {
+  padding: 8px 12px;
+  background-color: #f7f9fc;
+  border: 1px solid #e6eaef;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.suggested-response:hover {
+  background-color: #edf2fa;
+}
+
+.customer-context {
+  background-color: #f7f9fc;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.context-item {
+  margin-bottom: 6px;
+}
+
+.context-label {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+/* Enhanced Insights Panel Styling */
+.sentiment-progress-bar {
+  height: 8px;
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 8px 0 4px 0;
+}
+
+.sentiment-progress-fill {
+  height: 100%;
+  background-color: #10B981;
+}
+
+.sentiment-distribution {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.metric-box {
+  background-color: #f9fafb;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.metric-label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.metric-value {
+  font-weight: 600;
+}
+
+.confidence-level {
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.knowledge-box {
+  background-color: #f9fafb;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.knowledge-title {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.knowledge-content {
+  margin: 0;
+} 

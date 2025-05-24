@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support Hub Demo</title>
+  <link rel="stylesheet" href="support-hub-style.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f2f5;
+      color: #1f2937;
+    }
+    
+    header {
+      background-color: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      margin-right: 16px;
+    }
+    
+    .app-name {
+      font-size: 20px;
+      font-weight: 600;
+      margin-left: 12px;
+    }
+    
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    
+    .demo-section {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
+      padding: 24px;
+    }
+    
+    h2 {
+      margin-top: 0;
+      color: #1f2937;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .conversation-container {
+      display: flex;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 600px;
+    }
+    
+    .conversation-list {
+      width: 300px;
+      background-color: white;
+      border-right: 1px solid #e5e7eb;
+      overflow-y: auto;
+    }
+    
+    .conversation-item {
+      padding: 12px;
+      border-bottom: 1px solid #e5e7eb;
+      cursor: pointer;
+    }
+    
+    .conversation-item:hover {
+      background-color: #f9fafb;
+    }
+    
+    .conversation-item.active {
+      background-color: #f0f7ff;
+    }
+    
+    .conversation-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+    
+    .conversation-name {
+      font-weight: 600;
+    }
+    
+    .conversation-time {
+      color: #6b7280;
+    }
+    
+    .conversation-preview {
+      font-size: 13px;
+      color: #6b7280;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .conversation-view {
+      flex: 1;
+      display: flex;
+      background-color: white;
+    }
+    
+    .chat-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .chat-header {
+      padding: 16px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .customer-info {
+      display: flex;
+      align-items: center;
+    }
+    
+    .customer-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #e5e7eb;
+      margin-right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #6b7280;
+    }
+    
+    .customer-name {
+      font-weight: 600;
+    }
+    
+    .chat-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .action-button {
+      padding: 6px 12px;
+      border-radius: 4px;
+      background-color: #f9fafb;
+      border: 1px solid #e5e7eb;
+      color: #6b7280;
+      cursor: pointer;
+    }
+    
+    .action-button:hover {
+      background-color: #f3f4f6;
+    }
+    
+    .chat-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      background-color: #f9fafb;
+    }
+    
+    .message {
+      margin-bottom: 16px;
+      max-width: 80%;
+    }
+    
+    .message-user {
+      margin-left: auto;
+      background-color: #1f93ff;
+      color: white;
+      border-radius: 12px 12px 0 12px;
+      padding: 12px;
+    }
+    
+    .message-customer {
+      background-color: white;
+      border-radius: 12px 12px 12px 0;
+      padding: 12px;
+      border: 1px solid #e5e7eb;
+    }
+    
+    .message-meta {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    
+    .message-sender {
+      font-weight: 600;
+      font-size: 13px;
+      margin-right: 8px;
+    }
+    
+    .message-time {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    
+    .chat-input {
+      padding: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+    
+    .input-container {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .message-input {
+      flex: 1;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-family: inherit;
+      resize: none;
+    }
+    
+    .send-button {
+      padding: 8px 16px;
+      background-color: #1f93ff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .label {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .label-ai-assistant {
+      background-color: #e6f0ff;
+      color: #1f76cc;
+    }
+    
+    .label-topic {
+      background-color: #e3f9e5;
+      color: #138a36;
+    }
+    
+    .before-after {
+      display: flex;
+      gap: 24px;
+    }
+    
+    .before, .after {
+      flex: 1;
+      padding: 16px;
+      border-radius: 8px;
+    }
+    
+    .before {
+      background-color: #f9fafb;
+      border: 1px dashed #d1d5db;
+    }
+    
+    .after {
+      background-color: #f0f7ff;
+      border: 1px dashed #93c5fd;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <div class="support-hub-logo">
+        <div class="support-hub-logo-inner"></div>
+      </div>
+      <div class="app-name">Support Hub</div>
+    </div>
+  </header>
+  
+  <main>
+    <div class="demo-section">
+      <h2>Branding Changes</h2>
+      
+      <div class="before-after">
+        <div class="before">
+          <h3>Before</h3>
+          <p>Welcome to <strong>Chatwoot</strong>!</p>
+          <p>The <span class="label label-ai-assistant">Captain</span> is waiting for the <span class="label label-topic">Assistant</span> to respond.</p>
+        </div>
+        
+        <div class="after">
+          <h3>After</h3>
+          <p>Welcome to <strong>Support Hub</strong>!</p>
+          <p>The <span class="label label-ai-assistant">AI Assistant</span> is waiting for the <span class="label label-topic">Topic</span> to respond.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="demo-section">
+      <h2>Conversation with Insights Panel</h2>
+      
+      <div class="conversation-container">
+        <div class="conversation-list">
+          <div class="conversation-item active">
+            <div class="conversation-meta">
+              <div class="conversation-name">John Smith</div>
+              <div class="conversation-time">10:45 AM</div>
+            </div>
+            <div class="conversation-preview">I need help with my recent order...</div>
+          </div>
+          
+          <div class="conversation-item">
+            <div class="conversation-meta">
+              <div class="conversation-name">Sarah Johnson</div>
+              <div class="conversation-time">Yesterday</div>
+            </div>
+            <div class="conversation-preview">Thanks for your help with my issue...</div>
+          </div>
+          
+          <div class="conversation-item">
+            <div class="conversation-meta">
+              <div class="conversation-name">Michael Brown</div>
+              <div class="conversation-time">Yesterday</div>
+            </div>
+            <div class="conversation-preview">When will my order be shipped?</div>
+          </div>
+        </div>
+        
+        <div class="conversation-view">
+          <div class="chat-container">
+            <div class="chat-header">
+              <div class="customer-info">
+                <div class="customer-avatar">JS</div>
+                <div class="customer-name">John Smith</div>
+              </div>
+              
+              <div class="chat-actions">
+                <button class="action-button">Assign</button>
+                <button class="action-button">Resolve</button>
+              </div>
+            </div>
+            
+            <div class="chat-messages">
+              <div class="message message-customer">
+                <div class="message-meta">
+                  <div class="message-sender">John Smith</div>
+                  <div class="message-time">10:45 AM</div>
+                </div>
+                <div class="message-content">
+                  Hello, I recently purchased a laptop from your store but it arrived with a cracked screen. I'd like to request a refund or replacement.
+                </div>
+              </div>
+              
+              <div class="message message-user">
+                <div class="message-meta">
+                  <div class="message-sender">AI Assistant</div>
+                  <div class="message-time">10:47 AM</div>
+                </div>
+                <div class="message-content">
+                  I'm sorry to hear about the damaged laptop. I understand how frustrating this must be. Could you please provide your order number so I can look into this for you?
+                </div>
+              </div>
+              
+              <div class="message message-customer">
+                <div class="message-meta">
+                  <div class="message-sender">John Smith</div>
+                  <div class="message-time">10:48 AM</div>
+                </div>
+                <div class="message-content">
+                  Yes, my order number is #ORD-12345. I received it yesterday and noticed the damage immediately upon opening the package. I'm really disappointed as I needed this for work.
+                </div>
+              </div>
+              
+              <div class="message message-user">
+                <div class="message-meta">
+                  <div class="message-sender">AI Assistant</div>
+                  <div class="message-time">10:50 AM</div>
+                </div>
+                <div class="message-content">
+                  Thank you for providing the order number. I've located your order in our system. I'm very sorry about this experience. I'll process a replacement right away, and we'll expedite the shipping at no extra cost to you. Would that work for you?
+                </div>
+              </div>
+            </div>
+            
+            <div class="chat-input">
+              <div class="input-container">
+                <textarea class="message-input" placeholder="Type your message..."></textarea>
+                <button class="send-button">Send</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="conversation-insights-panel">
+            <div class="insights-section">
+              <h3>Conversation Insights</h3>
+            </div>
+            
+            <div class="insights-section">
+              <h3>Sentiment Analysis</h3>
+              <div>Dominant: <span class="insight-badge sentiment-positive">Positive</span></div>
+              <div style="margin-top: 8px; margin-bottom: 4px;">
+                <div style="background-color: #e5e7eb; height: 8px; width: 100%; border-radius: 4px; overflow: hidden;">
+                  <div style="background-color: #10B981; height: 8px; width: 80%;"></div>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 12px; color: #6b7280;">
+                <div>Positive: 80%</div>
+                <div>Negative: 10%</div>
+                <div>Neutral: 10%</div>
+              </div>
+            </div>
+            
+            <div class="insights-section">
+              <h3>Topic Classification</h3>
+              <div>Primary Topic: <span class="insight-badge topic-badge">Billing</span></div>
+              <div style="margin-top: 12px;">
+                <span class="insight-badge topic-badge">Billing</span>
+                <span class="insight-badge topic-badge">Technical Support</span>
+                <span class="insight-badge topic-badge">Product Information</span>
+              </div>
+            </div>
+            
+            <div class="insights-section">
+              <h3>Response Time Metrics</h3>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px;">
+                <div style="background-color: #f9fafb; padding: 8px; border-radius: 4px;">
+                  <div style="font-size: 12px; color: #6b7280;">First Response</div>
+                  <div style="font-weight: 600;">2m 30s</div>
+                </div>
+                <div style="background-color: #f9fafb; padding: 8px; border-radius: 4px;">
+                  <div style="font-size: 12px; color: #6b7280;">Avg Response</div>
+                  <div style="font-weight: 600;">3m 15s</div>
+                </div>
+                <div style="background-color: #f9fafb; padding: 8px; border-radius: 4px;">
+                  <div style="font-size: 12px; color: #6b7280;">Resolution Time</div>
+                  <div style="font-weight: 600;">15m 45s</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="insights-section">
+              <h3>AI Response Suggestions</h3>
+              <div style="margin-top: 8px;">
+                <div style="margin-bottom: 4px; font-size: 12px; color: #6b7280;">Confidence: 92%</div>
+                <div class="suggested-response">
+                  Thank you for reaching out about your billing concern. I can help with that.
+                </div>
+              </div>
+              <div style="margin-top: 12px;">
+                <div style="margin-bottom: 4px; font-size: 12px; color: #6b7280;">Confidence: 87%</div>
+                <div class="suggested-response">
+                  I understand you have a question about your recent invoice. Let me assist you.
+                </div>
+              </div>
+              <div style="margin-top: 12px;">
+                <div style="margin-bottom: 4px; font-size: 12px; color: #6b7280;">Confidence: 78%</div>
+                <div class="suggested-response">
+                  I'll look into your billing issue right away.
+                </div>
+              </div>
+            </div>
+            
+            <div class="insights-section">
+              <h3>Relevant Knowledge</h3>
+              <div style="background-color: #f9fafb; padding: 12px; border-radius: 4px; font-size: 14px;">
+                <div style="margin-bottom: 8px;"><strong>Billing Policy</strong></div>
+                <p style="margin: 0;">Customers can request refunds within 30 days of purchase. Subscription billing occurs on the same day each month.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <script>
+    // Demo interaction
+    document.querySelector('.send-button').addEventListener('click', function() {
+      const input = document.querySelector('.message-input');
+      const message = input.value.trim();
+      
+      if (message) {
+        const messagesContainer = document.querySelector('.chat-messages');
+        const newMessage = document.createElement('div');
+        newMessage.className = 'message message-user';
+        
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const timeStr = `${hours}:${minutes < 10 ? '0' + minutes : minutes} ${hours >= 12 ? 'PM' : 'AM'}`;
+        
+        newMessage.innerHTML = `
+          <div class="message-meta">
+            <div class="message-sender">AI Assistant</div>
+            <div class="message-time">${timeStr}</div>
+          </div>
+          <div class="message-content">
+            ${message}
+          </div>
+        `;
+        
+        messagesContainer.appendChild(newMessage);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        input.value = '';
+      }
+    });
+    
+    document.querySelector('.message-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        document.querySelector('.send-button').click();
+      }
+    });
+    
+    // Make suggested responses clickable
+    document.querySelectorAll('.suggested-response').forEach(suggestion => {
+      suggestion.addEventListener('click', function() {
+        document.querySelector('.message-input').value = this.textContent.trim();
+      });
+    });
+  </script>
+</body>
+</html> 

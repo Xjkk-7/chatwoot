@@ -1,0 +1,3 @@
+@echo off
+echo Opening Support Hub Demo...
+start "" "public\start-demo.html" 
