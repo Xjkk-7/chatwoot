@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatwoot Customization Installation Guide</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <header class="mb-10 text-center">
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">Chatwoot Customization Installation Guide</h1>
+      <p class="text-gray-600">How to apply AI Assistant rebranding and enhanced analytics to your Chatwoot installation</p>
+    </header>
+
+    <div class="bg-white rounded-lg shadow p-6 mb-8">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Method 1: Using the JavaScript File</h2>
+      <div class="mb-4">
+        <p class="mb-2">This is the simplest method and works with any Chatwoot installation:</p>
+        <ol class="list-decimal pl-6 space-y-2">
+          <li>Download the <code class="bg-gray-100 px-2 py-1 rounded">deploy-customizations.js</code> file</li>
+          <li>Copy it to your Chatwoot server's public directory</li>
+          <li>Add the following script tag to your Chatwoot's index.html file just before the closing &lt;/body&gt; tag:
+            <pre class="bg-gray-100 p-3 rounded mt-2 overflow-x-auto"><code>&lt;script src="/deploy-customizations.js"&gt;&lt;/script&gt;</code></pre>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6 mb-8">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Method 2: Browser Extension (Tampermonkey)</h2>
+      <div class="mb-4">
+        <p class="mb-2">If you don't have access to modify the server files, you can use a browser extension:</p>
+        <ol class="list-decimal pl-6 space-y-2">
+          <li>Install the <a href="https://www.tampermonkey.net/" class="text-blue-600 hover:underline">Tampermonkey</a> browser extension</li>
+          <li>Create a new script and paste the entire contents of <code class="bg-gray-100 px-2 py-1 rounded">deploy-customizations.js</code></li>
+          <li>Set it to run on your Chatwoot domain</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6 mb-8">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Method 3: Full Docker Deployment</h2>
+      <div class="mb-4">
+        <p class="mb-2">For a complete Chatwoot deployment with customizations:</p>
+        <ol class="list-decimal pl-6 space-y-2">
+          <li>Clone our repository:
+            <pre class="bg-gray-100 p-3 rounded mt-2 overflow-x-auto"><code>git clone https://github.com/yourusername/chatwoot-customizations.git
+cd chatwoot-customizations</code></pre>
+          </li>
+          <li>Start the Docker containers:
+            <pre class="bg-gray-100 p-3 rounded mt-2 overflow-x-auto"><code>docker-compose -f docker-compose.deploy.yml up -d</code></pre>
+          </li>
+          <li>Run the injection script:
+            <pre class="bg-gray-100 p-3 rounded mt-2 overflow-x-auto"><code># Linux/Mac
+./inject-customizations.sh
+
+# Windows
+.\inject-customizations.ps1</code></pre>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Customizing the JavaScript</h2>
+      <div class="mb-4">
+        <p class="mb-2">You can modify the JavaScript file to change the customization behavior:</p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>Change the colors by modifying the CSS color values (e.g., <code class="bg-gray-100 px-2 py-1 rounded">#3B82F6</code> for AI Assistant)</li>
+          <li>Change the labels by modifying the <code class="bg-gray-100 px-2 py-1 rounded">content: "AI Assistant"</code> values</li>
+          <li>Adjust the analytics panel metrics by modifying the HTML in the <code class="bg-gray-100 px-2 py-1 rounded">analyticsPanel.innerHTML</code> section</li>
+        </ul>
+        <p class="mt-4">The CSS selectors are designed to target Chatwoot's current DOM structure. If you're using a different version of Chatwoot, you may need to adjust these selectors.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html> 

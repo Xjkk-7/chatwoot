@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatwoot Customizations Demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Base Chatwoot styling (simplified) */
+    .captain-container, .captain-assistant-container, .captain-label, .captain-topic-container,
+    .assistant-container, .assistant-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background-color: #f3f4f6;
+      margin: 4px;
+    }
+    
+    .captain-text, .assistant-text {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <header class="mb-10 text-center">
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">Chatwoot Customizations Demo</h1>
+      <p class="text-gray-600">This page demonstrates the rebranding and analytics enhancements</p>
+    </header>
+
+    <div class="bg-white rounded-lg shadow p-6 mb-8">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">1. Captain → AI Assistant Rebranding</h2>
+      <div class="flex flex-wrap gap-3 mb-4">
+        <span class="captain-container"><span class="captain-text">Captain</span></span>
+        <span class="captain-assistant-container"><span class="captain-text">Captain</span></span>
+        <span class="captain-label"><span class="captain-text">Captain</span></span>
+        <span data-testid="captain-assistant"><span class="captain-text">Captain</span></span>
+      </div>
+      <p class="text-gray-600 italic">The labels above should all display as "AI Assistant" in blue after the customization is applied.</p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6 mb-8">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">2. Assistant → Topic Rebranding</h2>
+      <div class="flex flex-wrap gap-3 mb-4">
+        <span class="assistant-container"><span class="assistant-text">Assistant</span></span>
+        <span class="assistant-label"><span class="assistant-text">Assistant</span></span>
+        <span data-testid="assistant-label"><span class="assistant-text">Assistant</span></span>
+      </div>
+      <p class="text-gray-600 italic">The labels above should all display as "Topic" in green after the customization is applied.</p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">3. Enhanced Conversation Analytics</h2>
+      <div class="conversation-view p-4 border border-gray-200 rounded-lg">
+        <div class="conversation-header mb-4 pb-3 border-b border-gray-200">
+          <h3 class="font-bold text-gray-700">Conversation #12345</h3>
+        </div>
+        <!-- Analytics panel will be injected here by our script -->
+        <div class="conversation-messages">
+          <p class="text-gray-600 italic mb-4">After customization, an analytics panel will be automatically injected above this area.</p>
+          <!-- Sample messages -->
+          <div class="flex mb-3">
+            <div class="bg-blue-100 p-3 rounded-lg max-w-md">
+              <p class="text-sm">Hello, I need help with my account setup.</p>
+              <p class="text-xs text-gray-500 mt-1">User - 10:15 AM</p>
+            </div>
+          </div>
+          <div class="flex justify-end mb-3">
+            <div class="bg-gray-100 p-3 rounded-lg max-w-md">
+              <p class="text-sm">Hi there! I'd be happy to help you with your account setup. What specific issues are you facing?</p>
+              <p class="text-xs text-gray-500 mt-1">Agent - 10:17 AM</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load our customization script -->
+  <script src="deploy-customizations.js"></script>
+</body>
+</html> 
