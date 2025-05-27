@@ -1,0 +1,8 @@
+# Force Build Trigger
+# This file forces Heroku to do a clean build with all customizations
+# Updated: 2024-05-27
+
+BUILD_ID=custom-chatwoot-v1.0
+INCLUDES_FEATURES=ai-assistant-rebranding,conversation-analytics,logo-rebranding
+BRANCH=deployment/all-features
+TIMESTAMP=2024-05-27T10:58:00Z 
