@@ -23,7 +23,7 @@
     "precompile": "vite build",
     "storybook": "histoire dev",
     "build-storybook": "histoire build",
-    "heroku-postbuild": "yarn install --production=false && yarn precompile"
+    "heroku-postbuild": "pnpm install --production=false && pnpm precompile"
   },
   "size-limit": [
     {
