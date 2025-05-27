@@ -13,6 +13,7 @@ import CardLabels from './conversationCardComponents/CardLabels.vue';
 import PriorityMark from './PriorityMark.vue';
 import SLACardLabel from './components/SLACardLabel.vue';
 import ContextMenu from 'dashboard/components/ui/ContextMenu.vue';
+import ConversationAnalyticsBadge from './ConversationAnalyticsBadge.vue';
 
 export default {
   components: {
@@ -25,6 +26,7 @@ export default {
     PriorityMark,
     SLACardLabel,
     ContextMenu,
+    ConversationAnalyticsBadge,
   },
   mixins: [inboxMixin],
   props: {
@@ -343,6 +345,7 @@ export default {
           <SLACardLabel :chat="chat" class="ltr:mr-1 rtl:ml-1" />
         </template>
       </CardLabels>
+      <ConversationAnalyticsBadge :conversation="chat" class="mx-2" />
     </div>
     <ContextMenu
       v-if="showContextMenu"

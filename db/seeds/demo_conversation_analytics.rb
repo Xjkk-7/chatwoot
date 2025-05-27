@@ -75,7 +75,7 @@ class DemoConversationAnalyticsSeeder
     
     # Customer initial message (2 hours ago)
     conversation.messages.create!(
-      content: "Hi! I'm having trouble integrating your API with our customer support system. The authentication seems to be failing and I'm getting 401 errors consistently. This is quite urgent as it's affecting our production environment. Could you please help me resolve this issue quickly?",
+      content: "Hi! I'm having trouble integrating your API with our customer support system. The authentication seems to be failing and I'm getting 401 errors consistently. This is quite urgent as it's affecting our production environment. Could you please help me resolve this issue quickly? We're a premium enterprise client and this is critical for our workflow.",
       account: account,
       inbox: conversation.inbox,
       conversation: conversation,
@@ -87,7 +87,7 @@ class DemoConversationAnalyticsSeeder
 
     # Agent response (1 hour 45 minutes ago)
     conversation.messages.create!(
-      content: "Hello Alex! I understand this is urgent and I'm here to help you resolve the API authentication issue immediately. Let me guide you through some troubleshooting steps. First, can you confirm you're using the correct API endpoint and your API key format?",
+      content: "Hello Alex! Thank you for contacting us. I understand this is urgent and I'm here to help you resolve the API authentication issue immediately. As a premium enterprise client, I'll prioritize this and ensure we get your integration working quickly. Let me guide you through some troubleshooting steps. First, can you confirm you're using the correct API endpoint and your API key format?",
       account: account,
       inbox: conversation.inbox,
       conversation: conversation,
@@ -156,7 +156,7 @@ class DemoConversationAnalyticsSeeder
   end
 
   def self.generate_conversation_analytics(conversation)
-    # Create comprehensive analytics data
+    # Create comprehensive analytics data with enhanced freestyle features
     analytics_data = {
       message_count: {
         total: 7,
@@ -172,7 +172,7 @@ class DemoConversationAnalyticsSeeder
       sentiment: 'positive',
       topics: ['API Integration', 'Authentication', 'Technical Support', 'Urgent Issue'],
       language: 'english',
-      complexity: 'medium',
+      complexity: 0.65,
       engagement_metrics: {
         duration_seconds: 7200, # 2 hours
         avg_time_between_messages: 1028, # ~17 minutes
@@ -182,11 +182,82 @@ class DemoConversationAnalyticsSeeder
       },
       conversation_summary: "API authentication troubleshooting conversation about Bearer token format issue, successfully resolved with customer satisfaction",
       key_phrases: ['API authentication', 'Bearer token', 'production environment', 'excellent support', 'urgent issue', 'integration'],
-      resolution_status: 'resolved'
+      resolution_status: 'resolved',
+      
+      # Enhanced freestyle features
+      issue_analysis: {
+        categories: [
+          { category: 'integration_issue', priority: 'medium', severity: 'medium' },
+          { category: 'urgent_bug', priority: 'high', severity: 'critical' }
+        ],
+        primary_category: 'integration_issue',
+        priority: 'high',
+        category_count: 2
+      },
+      
+      customer_journey: {
+        primary_stage: 'active_user',
+        stage_indicators: { 'active_user' => 2, 'support' => 3 },
+        confidence_score: 3
+      },
+      
+      product_detection: [
+        { product: 'api', mention_count: 4, relevance: 0.75 },
+        { product: 'dashboard', mention_count: 1, relevance: 0.20 }
+      ],
+      
+      escalation_risk: {
+        risk_level: 'low',
+        risk_score: -2,
+        high_risk_indicators: 0,
+        medium_risk_indicators: 1,
+        positive_indicators: 4,
+        slow_response_penalty: 0
+      },
+      
+      agent_performance: {
+        total_responses: 3,
+        avg_response_time_seconds: 450,
+        avg_message_length: 145,
+        professionalism_score: 3,
+        resolution_attempts: 2,
+        first_response_time: 300,
+        agents_involved: ['Support Agent']
+      },
+      
+      channel_effectiveness: {
+        channel_type: 'Channel::WebWidget',
+        channel_fitness: 'good',
+        conversation_complexity: 0.65,
+        message_volume: 7,
+        channel_recommendation: 'email'
+      },
+      
+      conversation_quality: {
+        overall_score: 88,
+        quality_level: 'excellent',
+        components: {
+          engagement: 24,
+          responsiveness: 25,
+          sentiment: 20,
+          resolution: 25
+        },
+        improvement_suggestions: ['Maintain current quality standards']
+      },
+      
+      business_impact: {
+        impact_level: 'high',
+        impact_score: 18,
+        impact_indicators: { 'high_value' => 1, 'expansion' => 0, 'retention' => 1 },
+        estimated_value: 2500
+      }
     }
 
-    # Update the conversation with analytics data
-    conversation.update!(additional_attributes: analytics_data)
+    # Update the conversation with analytics data  
+    conversation.update!(
+      additional_attributes: analytics_data,
+      content_attributes: analytics_data # Also store in content_attributes for immediate access
+    )
     
     # Also call the actual analytics service to demonstrate it works
     begin

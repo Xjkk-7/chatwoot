@@ -2,7 +2,7 @@ import { computed } from 'vue';
 import { useStore, useStoreGetters } from 'dashboard/composables/store';
 
 export const DEFAULT_CONVERSATION_SIDEBAR_ITEMS_ORDER = Object.freeze([
-  { name: 'content_attributes' }, // Moved analytics to the top for better visibility
+  { name: 'content_attributes' }, // 🔍 Analytics & Insights - Top priority for better visibility
   { name: 'conversation_actions' },
   { name: 'macros' },
   { name: 'conversation_info' },
@@ -161,8 +161,8 @@ export function useUISettings() {
     contactSidebarItemsOrder: useContactSidebarItemsOrder(uiSettings),
     isContactSidebarItemOpen: key => {
       // Special handling for content attributes to default to open
-      if (key === 'is_content_attributes_open' && uiSettings.value[key] === undefined) {
-        return true;
+      if (key === 'is_content_attributes_open') {
+        return uiSettings.value[key] !== false; // Default to true unless explicitly set to false
       }
       return !!uiSettings.value[key];
     },

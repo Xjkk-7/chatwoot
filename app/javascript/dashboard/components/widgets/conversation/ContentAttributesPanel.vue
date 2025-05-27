@@ -37,6 +37,14 @@ const conversationSummary = computed(() => contentAttributes.value?.conversation
 const keyPhrases = computed(() => contentAttributes.value?.key_phrases || []);
 const resolutionStatus = computed(() => contentAttributes.value?.resolution_status || null);
 
+// Enhanced freestyle features
+const issueAnalysis = computed(() => contentAttributes.value?.issue_analysis || null);
+const escalationRisk = computed(() => contentAttributes.value?.escalation_risk || null);
+const businessImpact = computed(() => contentAttributes.value?.business_impact || null);
+const conversationQuality = computed(() => contentAttributes.value?.conversation_quality || null);
+const agentPerformance = computed(() => contentAttributes.value?.agent_performance || null);
+const customerJourney = computed(() => contentAttributes.value?.customer_journey || null);
+
 // Function to format sentiment for display
 const formatSentiment = (sentiment) => {
   if (!sentiment) return '-';
@@ -134,10 +142,13 @@ const refreshAttributes = () => {
 };
 
 // Initialize content attributes if not present
-onMounted(() => {
+onMounted(async () => {
   if (currentChat.value && conversationId.value && 
       (!contentAttributes.value || Object.keys(contentAttributes.value).length === 0)) {
-    refreshAttributes();
+    console.log('🔍 Auto-generating conversation analytics for conversation:', conversationId.value);
+    await refreshAttributes();
+  } else if (contentAttributes.value) {
+    console.log('📊 Conversation analytics already available:', Object.keys(contentAttributes.value));
   }
 });
 </script>
@@ -276,6 +287,124 @@ onMounted(() => {
             <span class="text-lg font-medium" :class="formatResolutionStatus(resolutionStatus).color">
               {{ formatResolutionStatus(resolutionStatus).label }}
             </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Enhanced Business Analytics -->
+      <div v-if="businessImpact || escalationRisk || conversationQuality" class="business-analytics-section">
+        <h4 class="text-sm font-medium mb-3 flex items-center gap-2">
+          <div class="w-4 h-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded flex items-center justify-center">
+            <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+          </div>
+          Business Intelligence
+        </h4>
+        
+        <div class="grid grid-cols-1 gap-3">
+          <!-- Business Impact -->
+          <div v-if="businessImpact" class="p-3 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 rounded-lg">
+            <div class="flex justify-between items-center mb-2">
+              <h5 class="text-xs font-medium text-purple-700 dark:text-purple-300">Business Impact</h5>
+              <span class="text-lg font-bold text-purple-800 dark:text-purple-200">${{ businessImpact.estimated_value?.toLocaleString() || 'N/A' }}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded text-xs font-medium">
+                {{ businessImpact.impact_level?.replace('_', ' ')?.toUpperCase() || 'UNKNOWN' }}
+              </span>
+              <span class="text-xs text-purple-600 dark:text-purple-400">Impact Score: {{ businessImpact.impact_score || 0 }}</span>
+            </div>
+          </div>
+          
+          <!-- Escalation Risk -->
+          <div v-if="escalationRisk" class="p-3 rounded-lg" :class="{
+            'bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 border border-red-200 dark:border-red-800': escalationRisk.risk_level === 'high',
+            'bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border border-yellow-200 dark:border-yellow-800': escalationRisk.risk_level === 'medium',
+            'bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800': escalationRisk.risk_level === 'low' || escalationRisk.risk_level === 'normal'
+          }">
+            <div class="flex justify-between items-center mb-2">
+              <h5 class="text-xs font-medium" :class="{
+                'text-red-700 dark:text-red-300': escalationRisk.risk_level === 'high',
+                'text-yellow-700 dark:text-yellow-300': escalationRisk.risk_level === 'medium',
+                'text-green-700 dark:text-green-300': escalationRisk.risk_level === 'low' || escalationRisk.risk_level === 'normal'
+              }">Escalation Risk</h5>
+              <span class="text-lg font-bold" :class="{
+                'text-red-800 dark:text-red-200': escalationRisk.risk_level === 'high',
+                'text-yellow-800 dark:text-yellow-200': escalationRisk.risk_level === 'medium',
+                'text-green-800 dark:text-green-200': escalationRisk.risk_level === 'low' || escalationRisk.risk_level === 'normal'
+              }">{{ escalationRisk.risk_level?.toUpperCase() || 'UNKNOWN' }}</span>
+            </div>
+            <div class="text-xs space-y-1" :class="{
+              'text-red-600 dark:text-red-400': escalationRisk.risk_level === 'high',
+              'text-yellow-600 dark:text-yellow-400': escalationRisk.risk_level === 'medium',
+              'text-green-600 dark:text-green-400': escalationRisk.risk_level === 'low' || escalationRisk.risk_level === 'normal'
+            }">
+              <div>Risk Score: {{ escalationRisk.risk_score || 0 }}</div>
+              <div>Positive Indicators: {{ escalationRisk.positive_indicators || 0 }}</div>
+            </div>
+          </div>
+          
+          <!-- Conversation Quality -->
+          <div v-if="conversationQuality" class="p-3 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg">
+            <div class="flex justify-between items-center mb-2">
+              <h5 class="text-xs font-medium text-emerald-700 dark:text-emerald-300">Conversation Quality</h5>
+              <span class="text-lg font-bold text-emerald-800 dark:text-emerald-200">{{ conversationQuality.overall_score || 0 }}%</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 rounded text-xs font-medium">
+                {{ conversationQuality.quality_level?.replace('_', ' ')?.toUpperCase() || 'UNKNOWN' }}
+              </span>
+              <div class="flex gap-1">
+                <div v-for="i in 5" :key="i" class="w-2 h-2 rounded-full" :class="{
+                  'bg-emerald-500': i <= Math.round((conversationQuality.overall_score || 0) / 20),
+                  'bg-emerald-200 dark:bg-emerald-700': i > Math.round((conversationQuality.overall_score || 0) / 20)
+                }"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Issue Analysis & Customer Journey -->
+      <div v-if="issueAnalysis || customerJourney" class="advanced-analytics-section">
+        <h4 class="text-sm font-medium mb-3 flex items-center gap-2">
+          <div class="w-4 h-4 bg-gradient-to-br from-indigo-500 to-blue-500 rounded flex items-center justify-center">
+            <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+          </div>
+          Advanced Analytics
+        </h4>
+        
+        <div class="grid grid-cols-1 gap-3">
+          <!-- Issue Category -->
+          <div v-if="issueAnalysis" class="p-3 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 border border-indigo-200 dark:border-indigo-800 rounded-lg">
+            <h5 class="text-xs font-medium text-indigo-700 dark:text-indigo-300 mb-2">Issue Analysis</h5>
+            <div class="space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-indigo-800 dark:text-indigo-200">{{ issueAnalysis.primary_category?.replace('_', ' ')?.toUpperCase() || 'GENERAL' }}</span>
+                <span class="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 rounded text-xs">
+                  {{ issueAnalysis.priority?.toUpperCase() || 'LOW' }} PRIORITY
+                </span>
+              </div>
+              <div class="text-xs text-indigo-600 dark:text-indigo-400">
+                Categories Detected: {{ issueAnalysis.category_count || 0 }}
+              </div>
+            </div>
+          </div>
+          
+          <!-- Customer Journey -->
+          <div v-if="customerJourney" class="p-3 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 border border-teal-200 dark:border-teal-800 rounded-lg">
+            <h5 class="text-xs font-medium text-teal-700 dark:text-teal-300 mb-2">Customer Journey Stage</h5>
+            <div class="space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-teal-800 dark:text-teal-200">{{ customerJourney.primary_stage?.replace('_', ' ')?.toUpperCase() || 'UNKNOWN' }}</span>
+                <span class="px-2 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-800 dark:text-teal-300 rounded text-xs">
+                  {{ customerJourney.confidence_score || 0 }} confidence
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
