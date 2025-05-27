@@ -143,16 +143,26 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="content-attributes-panel rounded-lg bg-white dark:bg-n-solid-1 p-4">
+  <div class="content-attributes-panel rounded-lg bg-white dark:bg-n-solid-1 p-3">
     <!-- Header with refresh button -->
     <div class="flex justify-between items-center mb-4">
-      <h3 class="text-base font-medium">{{ $t('CONVERSATION.CONTENT_ATTRIBUTES.TITLE') }}</h3>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+        </div>
+        <h3 class="text-base font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          {{ $t('CONVERSATION.CONTENT_ATTRIBUTES.TITLE') }}
+        </h3>
+      </div>
       <NextButton
         v-tooltip="$t('CONVERSATION.CONTENT_ATTRIBUTES.REFRESH')"
         xs
         ghost
         icon="i-lucide-refresh-cw"
         @click="refreshAttributes"
+        class="hover:bg-blue-50 dark:hover:bg-blue-900/20"
       />
     </div>
     
@@ -203,13 +213,24 @@ onMounted(() => {
       <!-- Stats Dashboard -->
       <div class="stats-dashboard grid grid-cols-2 gap-3">
         <!-- Message count -->
-        <div v-if="messageCount" class="stat-card p-2 bg-n-slate-1 dark:bg-n-solid-2 rounded-md">
-          <h5 class="text-xs text-slate-500 dark:text-slate-400">{{ $t('CONVERSATION.CONTENT_ATTRIBUTES.MESSAGE_COUNT') }}</h5>
+        <div v-if="messageCount" class="stat-card p-3 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-lg shadow-sm">
+          <div class="flex items-center gap-2 mb-2">
+            <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+            <h5 class="text-xs font-medium text-blue-700 dark:text-blue-300">{{ $t('CONVERSATION.CONTENT_ATTRIBUTES.MESSAGE_COUNT') }}</h5>
+          </div>
           <div class="flex justify-between items-center">
-            <span class="text-lg font-medium">{{ messageCount.total }}</span>
-            <div class="text-xs text-slate-500 dark:text-slate-400">
-              <div>{{ $t('CONVERSATION.CONTENT_ATTRIBUTES.USER') }}: {{ messageCount.user }}</div>
-              <div>{{ $t('CONVERSATION.CONTENT_ATTRIBUTES.AGENT') }}: {{ messageCount.agent }}</div>
+            <span class="text-2xl font-bold text-blue-800 dark:text-blue-200">{{ messageCount.total }}</span>
+            <div class="text-xs text-blue-600 dark:text-blue-400 space-y-1">
+              <div class="flex items-center gap-1">
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span>{{ $t('CONVERSATION.CONTENT_ATTRIBUTES.USER') }}: {{ messageCount.user }}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span>{{ $t('CONVERSATION.CONTENT_ATTRIBUTES.AGENT') }}: {{ messageCount.agent }}</span>
+              </div>
             </div>
           </div>
         </div>
