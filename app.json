@@ -1,15 +1,17 @@
 {
-  "name": "Chatwoot",
-  "description": "Chatwoot is a customer support tool for instant messaging channels",
+  "name": "Chatwoot - Custom Enhanced Version",
+  "description": "Chatwoot with enhanced conversation analytics, AI assistant rebranding, and custom logo",
   "website": "https://www.chatwoot.com/",
-  "repository": "https://github.com/chatwoot/chatwoot",
+  "repository": "https://github.com/Xjkk-7/chatwoot",
   "logo": "https://app.chatwoot.com/brand-assets/logo_thumbnail.svg",
   "keywords": [
     "live chat",
     "customer support",
     "ruby",
     "rails",
-    "vue"
+    "vue",
+    "enhanced analytics",
+    "ai assistant"
   ],
   "success_url": "/",
   "env": {
@@ -58,7 +60,6 @@
       "plan": "heroku-postgresql:essential-0"
     }
   ],
-  "stack": "heroku-24",
   "buildpacks": [
     {
       "url": "heroku/nodejs"
