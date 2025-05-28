@@ -20,10 +20,10 @@
     "story:preview": "histoire preview",
     "sync:i18n": "bin/sync_i18n_file_change",
     "test:unit": "vitest run",
-    "precompile": "vite build",
+    "precompile": "node --max-old-space-size=4096 ./node_modules/.bin/vite build",
     "storybook": "histoire dev",
     "build-storybook": "histoire build",
-    "heroku-postbuild": "pnpm install --production=false && pnpm precompile"
+    "heroku-postbuild": "pnpm install --production=false && NODE_OPTIONS='--max-old-space-size=4096' pnpm precompile"
   },
   "size-limit": [
     {
@@ -148,8 +148,7 @@
     "vitest": "3.0.5"
   },
   "engines": {
-    "node": "23.x",
-    "pnpm": "10.x"
+    "node": "23.x"
   },
   "husky": {
     "hooks": {

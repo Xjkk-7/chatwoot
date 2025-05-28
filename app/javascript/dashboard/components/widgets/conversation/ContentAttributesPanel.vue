@@ -152,9 +152,17 @@ const escalationRisk = computed(
 const businessImpact = computed(
   () => displayAnalytics.value?.business_impact || null
 );
-const conversationQuality = computed(
-  () => displayAnalytics.value?.conversation_quality || null
-);
+const conversationQuality = computed(() => displayAnalytics.value?.conversation_quality || null);
+
+// Function to force recalculation of content attributes
+const refreshAttributes = () => {
+  if (!conversationId.value) return;
+  
+  // Dispatch action to recalculate content attributes
+  store.dispatch('conversations/updateContentAttributes', {
+    conversationId: conversationId.value
+  });
+};
 
 // Function to format sentiment for display
 const formatSentiment = (sentimentValue) => {
@@ -256,16 +264,6 @@ const formatComplexity = score => {
   }
 
   return `${level} (${percentage}%)`;
-};
-
-// Function to force recalculation of content attributes
-const refreshAttributes = () => {
-  if (!conversationId.value) return;
-  
-  // Dispatch action to recalculate content attributes
-  store.dispatch('conversations/updateContentAttributes', {
-    conversationId: conversationId.value
-  });
 };
 </script>
 

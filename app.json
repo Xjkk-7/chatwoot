@@ -34,6 +34,10 @@
       "description": "Installation method used for Chatwoot.",
       "value": "heroku"
     },
+    "NODE_OPTIONS": {
+      "description": "Node.js options for memory optimization",
+      "value": "--max-old-space-size=4096"
+    },
     "REDIS_OPENSSL_VERIFY_MODE":{
       "description": "OpenSSL verification mode for Redis connections. ref https://help.heroku.com/HC0F8CUS/redis-connection-issues",
       "value": "none"
@@ -42,11 +46,11 @@
   "formation": {
     "web": {
       "quantity": 1,
-      "size": "basic"
+      "size": "standard-1x"
     },
     "worker": {
       "quantity": 1,
-      "size": "basic"
+      "size": "standard-1x"
     }
   },
   "stack": "heroku-24",
