@@ -23,7 +23,7 @@
     "precompile": "NODE_OPTIONS='--max-old-space-size=4096' npx vite build",
     "storybook": "histoire dev",
     "build-storybook": "histoire build",
-    "heroku-postbuild": "pnpm install --production=false && pnpm precompile"
+    "heroku-postbuild": "pnpm install --production=false && pnpm precompile && BUILD_MODE=library pnpm build:sdk"
   },
   "size-limit": [
     {
