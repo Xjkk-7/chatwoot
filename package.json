@@ -20,10 +20,10 @@
     "story:preview": "histoire preview",
     "sync:i18n": "bin/sync_i18n_file_change",
     "test:unit": "vitest run",
-    "precompile": "node --max-old-space-size=4096 ./node_modules/.bin/vite build",
+    "precompile": "NODE_OPTIONS='--max-old-space-size=4096' npx vite build",
     "storybook": "histoire dev",
     "build-storybook": "histoire build",
-    "heroku-postbuild": "pnpm install --production=false && NODE_OPTIONS='--max-old-space-size=4096' pnpm precompile"
+    "heroku-postbuild": "pnpm install --production=false && pnpm precompile"
   },
   "size-limit": [
     {
