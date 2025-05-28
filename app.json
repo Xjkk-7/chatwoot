@@ -29,7 +29,7 @@
     },
     "FRONTEND_URL": {
       "description": "Public root URL of the Chatwoot installation. This will be used in the emails.",
-      "value": "https://CHANGE.herokuapp.com"
+      "value": "https://chatwoot-enhanced.herokuapp.com"
     },
     "INSTALLATION_ENV": {
       "description": "Installation method used for Chatwoot.",
