@@ -1,0 +1,24 @@
+# Commands to Check Captain Feature Status in Heroku Console
+
+# 1. First run: rails console
+# Then run these commands:
+
+# Check if captain_integration is enabled for your account
+account = Account.first
+puts "Account name: #{account.name}"
+puts "Captain feature enabled: #{account.enabled_features['captain_integration']}"
+puts "All enabled features: #{account.enabled_features.keys}"
+
+# Check Installation Config
+config = InstallationConfig.find_by(name: 'INSTALLATION_PRICING_PLAN')
+puts "Pricing plan: #{config&.value}"
+
+# Also check if the feature flag is in the list
+puts "Expected captain feature flag: captain_integration"
+
+# If captain_integration is false or nil, enable it:
+if !account.enabled_features['captain_integration']
+  puts "Enabling captain_integration feature..."
+  account.enable_features!('captain_integration')
+  puts "Captain feature enabled: #{account.reload.enabled_features['captain_integration']}"
+end 

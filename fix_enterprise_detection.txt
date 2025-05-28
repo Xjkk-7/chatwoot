@@ -1,0 +1,76 @@
+# COMPLETE FIX FOR ENTERPRISE FEATURES NOT APPEARING
+
+The issue is that the frontend isn't detecting your installation as "enterprise".
+Here's the complete step-by-step fix:
+
+# === STEP 1: Backend - Set Installation Config ===
+# Run in Heroku Rails Console:
+
+# Clear all caches first
+Rails.cache.clear
+GlobalConfig.clear_cache
+
+# Set the core enterprise configs
+InstallationConfig.find_or_create_by(name: 'INSTALLATION_PRICING_PLAN') do |config|
+  config.value = 'enterprise'
+  config.locked = true
+end.update!(value: 'enterprise')
+
+InstallationConfig.find_or_create_by(name: 'CHATWOOT_ENTERPRISE_ENABLED') do |config|
+  config.value = 'true'
+  config.locked = true
+end.update!(value: 'true')
+
+# Ensure GlobalConfig knows this is enterprise
+GlobalConfig.clear_cache
+
+# Enable all account features
+account = Account.first
+account.enable_features!(
+  'captain_integration',
+  'sla', 
+  'audit_logs',
+  'custom_roles',
+  'disable_branding',
+  'help_center',
+  'campaigns',
+  'team_management',
+  'reports',
+  'automations',
+  'macros',
+  'integrations'
+)
+
+# Update account attributes
+account.update!(
+  custom_attributes: account.custom_attributes.merge({
+    'plan_name' => 'Enterprise',
+    'subscription_status' => 'active',
+    'enterprise_enabled' => true
+  })
+)
+
+puts "=== VERIFICATION ==="
+puts "Installation plan: #{ChatwootHub.pricing_plan}"
+puts "Is Enterprise: #{ChatwootApp.enterprise?}"
+puts "Captain enabled: #{account.enabled_features['captain_integration']}"
+puts "SLA enabled: #{account.enabled_features['sla']}"
+
+# === STEP 2: Set Heroku Environment Variables ===
+# Run these in your terminal (NOT Heroku console):
+
+# heroku config:set INSTALLATION_PRICING_PLAN=enterprise -a your-app-name
+# heroku config:set CHATWOOT_ENTERPRISE_ENABLED=true -a your-app-name
+# heroku config:set CW_EDITION=enterprise -a your-app-name
+
+# === STEP 3: Restart Everything ===
+# heroku restart -a your-app-name
+
+# === STEP 4: Verify Frontend Config ===
+# After restart, open browser console and check:
+# console.log(window.chatwootConfig.isEnterprise) // Should be 'true'
+# console.log(window.chatwootConfig.enterprisePlanName) // Should be 'enterprise'
+
+# === STEP 5: Hard Browser Refresh ===
+# Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R (Mac)
+# Or clear localStorage: localStorage.clear(); window.location.reload(); 

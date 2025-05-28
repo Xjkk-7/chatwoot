@@ -1,0 +1,28 @@
+# CORRECTED COMMANDS - Fixed Feature Flag Name
+
+The feature flag is 'chatwoot_v4' (lowercase), not 'CHATWOOT_V4'
+
+# === RUN THIS IN HEROKU RAILS CONSOLE ===
+
+account = Account.first
+puts "Current features: #{account.enabled_features.keys}"
+
+# Enable chatwoot_v4 AND captain_integration together (correct lowercase names)
+account.enable_features!('chatwoot_v4', 'captain_integration')
+puts "New features: #{account.enabled_features.keys}"
+
+# Verify both are enabled
+puts "chatwoot_v4: #{account.enabled_features['chatwoot_v4']}"
+puts "captain_integration: #{account.enabled_features['captain_integration']}"
+
+# Clear any caches
+Rails.cache.clear
+
+# === THEN REFRESH YOUR BROWSER ===
+# After running the above, refresh your Chatwoot page
+# The Captain/AI Assistant menu should now appear in the sidebar
+
+# === ALTERNATIVE: If you want to use the OLD sidebar ===
+# This will show Captain menu in the classic sidebar:
+# account.enabled_features.delete('chatwoot_v4')
+# account.save! 

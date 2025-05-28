@@ -1,0 +1,39 @@
+# Test Which Sidebar You're Using
+
+You're seeing the new Chatwoot V4 sidebar, but Captain isn't appearing because
+the new sidebar doesn't properly check for Captain feature flags.
+
+# === STEP 1: Check Which Sidebar Is Active ===
+# Run in browser console:
+
+console.log('CHATWOOT_V4 enabled:', window.CHATWOOT?.$store?.getters?.['accounts/isFeatureEnabledonAccount'](1, 'CHATWOOT_V4'));
+
+# === STEP 2: Check Captain Feature Detection in New Sidebar ===
+# The new sidebar hardcodes Captain but doesn't check feature flags properly
+
+# === STEP 3: Force Enable CHATWOOT_V4 Feature Properly ===
+# Run in Heroku Rails Console:
+
+account = Account.first
+puts "Current features: #{account.enabled_features.keys}"
+
+# Enable CHATWOOT_V4 AND Captain together
+account.enable_features!('CHATWOOT_V4', 'captain_integration')
+puts "New features: #{account.enabled_features.keys}"
+
+# Make sure both are enabled
+puts "CHATWOOT_V4: #{account.enabled_features['CHATWOOT_V4']}"
+puts "Captain: #{account.enabled_features['captain_integration']}"
+
+# === STEP 4: Alternative - Use Old Sidebar Temporarily ===
+# If new sidebar is problematic, disable CHATWOOT_V4 to use old sidebar:
+
+# account.enabled_features.delete('CHATWOOT_V4')
+# account.save!
+
+# === STEP 5: Manual URL Test ===
+# Try accessing Captain directly via URL:
+# https://your-app.herokuapp.com/app/accounts/1/captain/assistants
+# https://your-app.herokuapp.com/app/accounts/1/captain/documents
+
+# If these work, the issue is just sidebar menu visibility in new UI 
