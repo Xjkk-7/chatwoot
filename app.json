@@ -1,15 +1,17 @@
 {
-  "name": "Chatwoot",
-  "description": "Chatwoot is a customer support tool for instant messaging channels",
+  "name": "Chatwoot - Custom Enhanced Version",
+  "description": "Chatwoot with enhanced conversation analytics, AI assistant rebranding, and custom logo",
   "website": "https://www.chatwoot.com/",
-  "repository": "https://github.com/chatwoot/chatwoot",
+  "repository": "https://github.com/Xjkk-7/chatwoot",
   "logo": "https://app.chatwoot.com/brand-assets/logo_thumbnail.svg",
   "keywords": [
     "live chat",
     "customer support",
     "ruby",
     "rails",
-    "vue"
+    "vue",
+    "enhanced analytics",
+    "ai assistant"
   ],
   "success_url": "/",
   "env": {
@@ -26,12 +28,15 @@
       "value": "production"
     },
     "FRONTEND_URL": {
-      "description": "Public root URL of the Chatwoot installation. This will be used in the emails.",
-      "value": "https://CHANGE.herokuapp.com"
+      "description": "Public root URL of the Chatwoot installation. This will be used in the emails."
     },
     "INSTALLATION_ENV": {
       "description": "Installation method used for Chatwoot.",
       "value": "heroku"
+    },
+    "NODE_OPTIONS": {
+      "description": "Node.js options for memory optimization",
+      "value": "--max-old-space-size=4096"
     },
     "REDIS_OPENSSL_VERIFY_MODE":{
       "description": "OpenSSL verification mode for Redis connections. ref https://help.heroku.com/HC0F8CUS/redis-connection-issues",
@@ -41,11 +46,11 @@
   "formation": {
     "web": {
       "quantity": 1,
-      "size": "basic"
+      "size": "standard-1x"
     },
     "worker": {
       "quantity": 1,
-      "size": "basic"
+      "size": "standard-1x"
     }
   },
   "stack": "heroku-24",
@@ -58,7 +63,6 @@
       "plan": "heroku-postgresql:essential-0"
     }
   ],
-  "stack": "heroku-24",
   "buildpacks": [
     {
       "url": "heroku/nodejs"

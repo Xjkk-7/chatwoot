@@ -1,0 +1,16 @@
+# Heroku Deployment Force Rebuild
+# This file ensures all customizations are properly deployed
+
+REBUILD_TIMESTAMP=2024-12-18T15:30:00Z
+FEATURES_INCLUDED=true
+CUSTOMIZATIONS_ACTIVE=true
+
+# Features Deployed:
+# 1. AI Assistant Rebranding (Captain -> AI Assistant)
+# 2. Enhanced Conversation Analytics
+# 3. Custom Logo Integration
+# 4. Localization Updates
+# 5. UI Theme Improvements
+
+BUILD_HASH=chatwoot-custom-v2.0.1
+CACHE_BUSTER=force-rebuild-2024-12-18 

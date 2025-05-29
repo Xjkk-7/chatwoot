@@ -1,0 +1,66 @@
+# Commands to Force Refresh Account Features
+
+# === STEP 1: Backend - Clear Cache and Verify Features ===
+# Run in Heroku Rails Console:
+
+# Clear all caches
+Rails.cache.clear
+GlobalConfig.clear_cache
+
+# Verify account features are enabled
+account = Account.first
+puts "=== ACCOUNT FEATURES STATUS ==="
+puts "Account ID: #{account.id}"
+puts "Account Name: #{account.name}"
+puts "Plan: #{account.custom_attributes['plan_name']}"
+puts "Captain Integration: #{account.enabled_features['captain_integration']}"
+puts "SLA: #{account.enabled_features['sla']}"
+puts "Audit Logs: #{account.enabled_features['audit_logs']}"
+puts "Custom Roles: #{account.enabled_features['custom_roles']}"
+puts ""
+
+# Force enable all enterprise features if needed
+unless account.enabled_features['captain_integration']
+  puts "Enabling missing enterprise features..."
+  account.enable_features!(
+    'captain_integration',
+    'sla', 
+    'audit_logs',
+    'custom_roles',
+    'disable_branding',
+    'help_center',
+    'campaigns',
+    'team_management',
+    'reports',
+    'automations',
+    'macros',
+    'integrations'
+  )
+  puts "Features enabled successfully!"
+end
+
+# Clear account cache specifically
+account.clear_cache if account.respond_to?(:clear_cache)
+
+# === STEP 2: Frontend - Force Account Data Refresh ===
+# Open browser console and run:
+
+# Force refresh account data
+window.location.hash = '#refresh-account-data'
+setTimeout(() => {
+  // Force reload the account store
+  if (window.CHATWOOT && window.CHATWOOT.$store) {
+    window.CHATWOOT.$store.dispatch('accounts/get');
+  }
+  // Then reload the page after 2 seconds
+  setTimeout(() => {
+    window.location.reload();
+  }, 2000);
+}, 1000);
+
+# === STEP 3: Alternative - Hard Refresh ===
+# If above doesn't work, try a hard browser refresh:
+# Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R (Mac)
+# Or clear browser localStorage:
+localStorage.clear();
+window.location.reload(); 

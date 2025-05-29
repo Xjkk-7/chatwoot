@@ -1,0 +1,17 @@
+# Commands to Enable AI Assistant (Captain) Features on Heroku
+
+# 1. Run the enterprise features enabler script
+heroku run rails runner enable_captain.rb -a your-app-name
+
+# 2. Restart your Heroku app to apply changes
+heroku restart -a your-app-name
+
+# 3. (Optional) Verify features are enabled
+heroku run rails console -a your-app-name
+# Then in the console, run:
+# Account.first.enabled_features['captain_integration']
+# Should return: true
+
+# 4. Alternative: Set environment variables directly
+heroku config:set INSTALLATION_PRICING_PLAN=enterprise -a your-app-name
+heroku config:set CHATWOOT_ENTERPRISE_ENABLED=true -a your-app-name 

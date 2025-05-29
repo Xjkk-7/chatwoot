@@ -45,7 +45,18 @@ if (isLibraryMode) {
 export default defineConfig({
   plugins: plugins,
   build: {
+    // Optimize for memory usage on Heroku
+    chunkSizeWarningLimit: 1000,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
     rollupOptions: {
+      // Reduce memory usage during build
+      maxParallelFileOps: 2,
       output: {
         // [NOTE] when not in library mode, no new keys will be addedd or overwritten
         // setting dir: isLibraryMode ? 'public/packs' : undefined will not work
@@ -61,6 +72,12 @@ export default defineConfig({
             }
           : {}),
         inlineDynamicImports: isLibraryMode, // Disable code-splitting for SDK
+        // Optimize chunk splitting for better memory usage
+        manualChunks: !isLibraryMode ? {
+          vendor: ['vue', 'vue-router', 'vuex'],
+          ui: ['@vueuse/core', '@vueuse/components'],
+          charts: ['chart.js', 'vue-chartjs'],
+        } : undefined,
       },
     },
     lib: isLibraryMode

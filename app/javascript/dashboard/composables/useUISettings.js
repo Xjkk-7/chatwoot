@@ -2,10 +2,10 @@ import { computed } from 'vue';
 import { useStore, useStoreGetters } from 'dashboard/composables/store';
 
 export const DEFAULT_CONVERSATION_SIDEBAR_ITEMS_ORDER = Object.freeze([
+  { name: 'content_attributes' }, // 🔍 Analytics & Insights - Top priority for better visibility
   { name: 'conversation_actions' },
   { name: 'macros' },
   { name: 'conversation_info' },
-  { name: 'content_attributes' },
   { name: 'contact_attributes' },
   { name: 'contact_notes' },
   { name: 'previous_conversation' },
@@ -135,12 +135,37 @@ export function useUISettings() {
     });
   };
 
+      // Set default states for analytics panel to be open by default
+  const ensureAnalyticsDefaults = () => {
+    const currentSettings = uiSettings.value;
+    const defaultSettings = {};
+    
+    // Make content attributes panel open by default
+    if (currentSettings.is_content_attributes_open === undefined) {
+      defaultSettings.is_content_attributes_open = true;
+    }
+    
+    // Update settings if we have new defaults
+    if (Object.keys(defaultSettings).length > 0) {
+      updateUISettings(defaultSettings);
+    }
+  };
+
+  // Call on initialization
+  ensureAnalyticsDefaults();
+
   return {
     uiSettings,
     updateUISettings,
     conversationSidebarItemsOrder: useConversationSidebarItemsOrder(uiSettings),
     contactSidebarItemsOrder: useContactSidebarItemsOrder(uiSettings),
-    isContactSidebarItemOpen: key => !!uiSettings.value[key],
+    isContactSidebarItemOpen: key => {
+      // Special handling for content attributes to default to open
+      if (key === 'is_content_attributes_open') {
+        return uiSettings.value[key] !== false; // Default to true unless explicitly set to false
+      }
+      return !!uiSettings.value[key];
+    },
     toggleSidebarUIState: key =>
       toggleSidebarUIState(key, uiSettings, updateUISettings),
     setSignatureFlagForInbox: (channelType, value) =>

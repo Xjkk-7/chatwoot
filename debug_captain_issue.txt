@@ -1,0 +1,60 @@
+# DEBUG: Why Captain/AI Assistant Isn't Appearing
+
+Since SLA and Custom Roles are working, enterprise detection is successful.
+The issue is specifically with Captain feature. Let's debug:
+
+# === STEP 1: Check Captain Feature Status ===
+# Run in Heroku Rails Console:
+
+account = Account.first
+puts "=== CAPTAIN DEBUG INFO ==="
+puts "Account ID: #{account.id}"
+puts "Account Name: #{account.name}"
+puts "Captain Integration: #{account.enabled_features['captain_integration']}"
+puts "All enabled features: #{account.enabled_features.keys}"
+puts ""
+
+# Force enable captain_integration specifically
+if !account.enabled_features['captain_integration']
+  puts "❌ Captain not enabled, enabling now..."
+  account.enable_features!('captain_integration')
+  puts "✅ Captain enabled: #{account.reload.enabled_features['captain_integration']}"
+else
+  puts "✅ Captain is already enabled"
+end
+
+# Check installation configs
+puts "=== INSTALLATION CONFIGS ==="
+puts "Pricing Plan: #{ChatwootHub.pricing_plan}"
+puts "Is Enterprise: #{ChatwootApp.enterprise?}"
+
+# === STEP 2: Check Frontend Feature Detection ===
+# After running the above, open browser console and check:
+
+# Check if Captain feature is detected by frontend:
+# window.CHATWOOT.$store.getters['accounts/isFeatureEnabledonAccount'](1, 'captain_integration')
+
+# Check the account data structure:
+# window.CHATWOOT.$store.getters['accounts/getAccount'](1)
+
+# === STEP 3: Verify Captain Routes ===
+# Check if Captain routes are accessible by manually visiting:
+# https://your-app.herokuapp.com/app/accounts/1/captain/documents
+
+# === STEP 4: Check Browser Network Tab ===
+# 1. Open Developer Tools (F12)
+# 2. Go to Network tab
+# 3. Refresh the page
+# 4. Look for any 404 errors related to captain or accounts API calls
+
+# === STEP 5: Force Refresh Account Data ===
+# Run in browser console:
+if (window.CHATWOOT && window.CHATWOOT.$store) {
+  window.CHATWOOT.$store.dispatch('accounts/get').then(() => {
+    console.log('Account data refreshed');
+    setTimeout(() => window.location.reload(), 1000);
+  });
+} else {
+  localStorage.clear();
+  window.location.reload();
+} 

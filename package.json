@@ -18,7 +18,12 @@
     "story:dev": "histoire dev",
     "story:build": "histoire build",
     "story:preview": "histoire preview",
-    "sync:i18n": "bin/sync_i18n_file_change"
+    "sync:i18n": "bin/sync_i18n_file_change",
+    "test:unit": "vitest run",
+    "precompile": "NODE_OPTIONS='--max-old-space-size=4096' npx vite build",
+    "storybook": "histoire dev",
+    "build-storybook": "histoire build",
+    "heroku-postbuild": "pnpm install --production=false && pnpm precompile && BUILD_MODE=library pnpm build:sdk"
   },
   "size-limit": [
     {
@@ -143,8 +148,7 @@
     "vitest": "3.0.5"
   },
   "engines": {
-    "node": "23.x",
-    "pnpm": "10.x"
+    "node": "23.x"
   },
   "husky": {
     "hooks": {

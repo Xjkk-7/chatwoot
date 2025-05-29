@@ -153,6 +153,15 @@ class Conversation < ApplicationRecord
     dispatcher_dispatch(CONVERSATION_BOT_HANDOFF)
   end
 
+  def content_attributes
+    additional_attributes&.dig('content_attributes') || {}
+  end
+
+  def update_content_attributes(attributes)
+    self.additional_attributes = additional_attributes.to_h.merge('content_attributes' => attributes)
+    save!
+  end
+
   def unread_messages
     agent_last_seen_at.present? ? messages.created_since(agent_last_seen_at) : messages
   end
